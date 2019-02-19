@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 2.0
+// @version 2.1
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
@@ -77,12 +77,15 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 				new mw.Api().postWithToken('csrf',{action:'block',user:creation.user,expiry:'2 weeks',reason:$( '.fast-block-text' ).val(),anononly:true,nocreate:true,autoblock:true,allowusertalk:true}).done(function(data){
 					$( '.fast-delete-submit-button' ).click();
 				}).fail(function(code, data){
-					alert("Couldn't block the user. Reason: ", code);
+					alert("Couldn't block the user. Reason: " + code);
 					$( '.fast-delete-submit-button' ).click();
 				});
+			} else {
+				alert("Couldn't block the user. Reason: Page is too old, couldn't fetch creator");
+				$( '.fast-delete-submit-button' ).click();
 			}
 		}).fail(function(code, data){
-			alert("Couldn't block the user. Reason: ", code);
+			alert("Couldn't block the user. Reason: " + code);
 			$( '.fast-delete-submit-button' ).click();
 		});
 	});
