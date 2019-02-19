@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 1.0
+// @version 2.0
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
