@@ -73,7 +73,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 		});
 	});
 
-    // Allow rollback to be submitted by pressing enter while focused on the input field
+    // Allow to be submitted by pressing enter while focused on the input field
     $( '#mw-content-text' ).on( 'keypress', '.fast-delete-text', function( e ) {
         if ( e.which !== 13 ) {
             return;
@@ -82,7 +82,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
         $( '.fast-delete-submit-button' ).click();
     });
 
-    // Close rollback if clicked anywhere else
+    // Close if clicked anywhere else
     $( window ).click( function( e ) {
         if ( !$( e.target ).is( '#fast-delete-summary, #ca-fast-delete > a' ) && !$( '#fast-delete-summary' ).has( e.target ).length ) {
             $( '#fast-delete-summary' ).hide();
