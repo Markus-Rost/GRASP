@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 2.1
+// @version 2.2
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
@@ -72,7 +72,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 	$( '#right-navigation' ).on( 'click', '.fast-block-submit-button', function() {
 		$( '#fast-delete-summary' ).hide();
 		new mw.Api().get({action:'query',list:'recentchanges',rctype:'new',rcprop:'title|user'}).done(function(data){
-			var creation = data.query.recentchanges.find( edit => edit.title == mw.config.get("wgPageName") );
+			var creation = data.query.recentchanges.find( edit => edit.title.replace(/ /g,'_') == mw.config.get("wgPageName") );
 			if ( creation ) {
 				new mw.Api().postWithToken('csrf',{action:'block',user:creation.user,expiry:'2 weeks',reason:$( '.fast-block-text' ).val(),anononly:true,nocreate:true,autoblock:true,allowusertalk:true}).done(function(data){
 					$( '.fast-delete-submit-button' ).click();
