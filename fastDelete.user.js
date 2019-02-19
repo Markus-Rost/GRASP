@@ -66,7 +66,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 
     $( '#right-navigation' ).on( 'click', '.fast-delete-submit-button', function() {
 		new mw.Api().postWithToken('csrf',{action:"delete",title:mw.config.get("wgPageName"),reason:$( '.fast-delete-text' ).val(),watchlist:"nochange"}).done(function(data){
-			location.reload();
+			window.location = '/' + mw.config.get("wgPageName");
 		}).fail(function(code, data){
 			alert("Could not delete this page. Reason: " + code);
             location.reload();
