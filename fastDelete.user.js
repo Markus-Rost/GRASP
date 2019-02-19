@@ -74,7 +74,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 		new mw.Api().get({action:'query',list:'recentchanges',rctype:'new',rcprop:'title|user'}).done(function(data){
 			var creation = data.query.recentchanges.find( edit => edit.title == mw.config.get("wgPageName") );
 			if ( creation ) {
-				new mw.Api().postWithToken('csrf',{action:'block',user:creation.user,expiry:'2 weeks',reason:$( '.fast-block-text' ).val(),anononly:true,nocreate:true,autoblock:true}).done(function(data){
+				new mw.Api().postWithToken('csrf',{action:'block',user:creation.user,expiry:'2 weeks',reason:$( '.fast-block-text' ).val(),anononly:true,nocreate:true,autoblock:true,allowusertalk:true}).done(function(data){
 					$( '.fast-delete-submit-button' ).click();
 				}).fail(function(code, data){
 					alert("Couldn't block the user. Reason: ", code);
