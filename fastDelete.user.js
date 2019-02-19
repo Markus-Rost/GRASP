@@ -17,7 +17,6 @@ if ( $( '#ca-delete' ).length ) {
 GM_addStyle (`
 @import "/load.php?modules=mediawiki.ui.input|mediawiki.ui.button&only=styles";
 #fast-delete-summary {
-	display: flex;
 	align-items: center;
 	position: absolute;
 	left: 1em;
@@ -28,11 +27,14 @@ GM_addStyle (`
 	z-index: 99;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
-#fast-delete-summary > *:first-child {
+#fast-delete-summary > div {
+	display: flex;
+}
+#fast-delete-summary > div > .fast-delete-text, #fast-delete-summary > div > .fast-block-text {
 	flex: auto;
 	margin-right: 1em;
 }
-#fast-delete-summary > .fast-delete-submit-button {
+#fast-delete-summary > div > .fast-delete-submit-button, #fast-delete-summary > div > .fast-block-submit-button {
 	flex: none;
 }
 `);
@@ -51,24 +53,28 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 			$rollback.remove();
 
 			$rollback = $( '<div id="fast-delete-summary">' ).append(
-				$( '<input type="text">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
-					'[[gphelp:GRASP|GRASP]]: Spam article'
+				$( '<div>' ).append(
+					$( '<input type="text">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
+						'[[gphelp:GRASP|GRASP]]: Spam article'
+					),
+					$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-delete-submit-button' ).val( 'Delete page' )
 				),
-				$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-delete-submit-button' ).val( 'Delete' ),
-				$( '<input type="text">' ).addClass( 'mw-ui-input fast-block-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
-					'[[gphelp:GRASP|GRASP]]: Creating spam articles'
-				),
-				$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-block-submit-button' ).val( 'Delete page and block page creator' )
+				$( '<div>' ).append(
+					$( '<input type="text">' ).addClass( 'mw-ui-input fast-block-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
+						'[[gphelp:GRASP|GRASP]]: Creating spam articles'
+					),
+					$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-block-submit-button' ).val( 'Delete page and block page creator' )
+				)
 			).insertBefore( '#p-cactions' );
 		}
 	});
 
 	$( '#right-navigation' ).on( 'click', '.fast-block-submit-button', function() {
 		$( '#fast-delete-summary' ).hide();
-		new mw.API().get({action:'query',list:'recentchanges',rctype:'new',rcprop:'title|user'}).done(function(data){
+		new mw.Api().get({action:'query',list:'recentchanges',rctype:'new',rcprop:'title|user'}).done(function(data){
 			var creation = data.query.recentchanges.find( edit => edit.title == mw.config.get("wgPageName") );
 			if ( creation ) {
-				new mw.API().postWithToken('csrf',{action:'block',user:creation.user,expiry:'2 weeks',reason:$( '.fast-block-text' ).val(),anononly:true,nocreate:true,autoblock:true}).done(function(data){
+				new mw.Api().postWithToken('csrf',{action:'block',user:creation.user,expiry:'2 weeks',reason:$( '.fast-block-text' ).val(),anononly:true,nocreate:true,autoblock:true}).done(function(data){
 					$( '.fast-delete-submit-button' ).click();
 				}).fail(function(code, data){
 					alert("Couldn't block the user. Reason: ", code);
