@@ -43,51 +43,69 @@ $( function() {
 var mw = unsafeWindow.mw;
 mw.loader.using(['site','mediawiki.util']).done(function() {
 	$(mw.util.addPortletLink('p-cactions', 'javascript:;', "Fast delete", 'ca-fast-delete', "Fast delete this page")).click(function() {
-        var $rollback = $( '#fast-delete-summary' );
+		var $rollback = $( '#fast-delete-summary' );
 
-        if ( $rollback.length ) {
-            $rollback.toggle();
-        } else {
-            $rollback.remove();
+		if ( $rollback.length ) {
+			$rollback.toggle();
+		} else {
+			$rollback.remove();
 
-            $rollback = $( '<div id="fast-delete-summary">' ).append(
-                $( '<input type="text">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
-                    '[[gphelp:GRASP|GRASP]]: Spam article'
-                ),
-                $( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-delete-submit-button' ).val( 'Delete' )
-            ).insertBefore( '#p-cactions' );
-        }
-
-        // This puts the cursor at the end of the text
-        var $text = $rollback.find( '.fast-delete-text' );
-        var summary = $text.val();
-        $text.focus().val( '' ).val( summary );
+			$rollback = $( '<div id="fast-delete-summary">' ).append(
+				$( '<input type="text">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
+					'[[gphelp:GRASP|GRASP]]: Spam article'
+				),
+				$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-delete-submit-button' ).val( 'Delete' )
+				$( '<input type="text">' ).addClass( 'mw-ui-input fast-block-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
+					'[[gphelp:GRASP|GRASP]]: Creating spam articles'
+				),
+				$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-block-submit-button' ).val( 'Delete page and block page creator' )
+			).insertBefore( '#p-cactions' );
+		}
 	});
 
-    $( '#right-navigation' ).on( 'click', '.fast-delete-submit-button', function() {
+	$( '#right-navigation' ).on( 'click', '.fast-block-submit-button', function() {
+		$( '#fast-delete-summary' ).hide();
+		new mw.API().get({action:'query',list:'recentchanges',rctype:'new',rcprop:'title|user'}).done(function(data){
+			var creation = data.query.recentchanges.find( edit => edit.title == mw.config.get("wgPageName") );
+			if ( creation ) {
+				new mw.API().postWithToken('csrf',{action:'block',user:creation.user,expiry:'2 weeks',reason:$( '.fast-block-text' ).val(),anononly:true,nocreate:true,autoblock:true}).done(function(data){
+					$( '.fast-delete-submit-button' ).click();
+				}).fail(function(code, data){
+					alert("Couldn't block the user. Reason: ", code);
+					$( '.fast-delete-submit-button' ).click();
+				});
+			}
+		}).fail(function(code, data){
+			alert("Couldn't block the user. Reason: ", code);
+			$( '.fast-delete-submit-button' ).click();
+		});
+	});
+
+	$( '#right-navigation' ).on( 'click', '.fast-delete-submit-button', function() {
+		$( '#fast-delete-summary' ).hide();
 		new mw.Api().postWithToken('csrf',{action:"delete",title:mw.config.get("wgPageName"),reason:$( '.fast-delete-text' ).val(),watchlist:"nochange"}).done(function(data){
 			window.location = '/' + data.delete.title;
 		}).fail(function(code, data){
 			alert("Could not delete this page. Reason: " + code);
-            location.reload();
+			location.reload();
 		});
 	});
 
-    // Allow to be submitted by pressing enter while focused on the input field
-    $( '#right-navigation' ).on( 'keypress', '.fast-delete-text', function( e ) {
-        if ( e.which !== 13 ) {
-            return;
-        }
-        e.preventDefault();
-        $( '.fast-delete-submit-button' ).click();
-    });
+	// Allow to be submitted by pressing enter while focused on the input field
+	$( '#right-navigation' ).on( 'keypress', '.fast-delete-text', function( e ) {
+		if ( e.which !== 13 ) {
+			return;
+		}
+		e.preventDefault();
+		$( '.fast-delete-submit-button' ).click();
+	});
 
-    // Close if clicked anywhere else
-    $( window ).click( function( e ) {
-        if ( !$( e.target ).is( '#fast-delete-summary, #ca-fast-delete > a' ) && !$( '#fast-delete-summary' ).has( e.target ).length ) {
-            $( '#fast-delete-summary' ).hide();
-        }
-    });
+	// Close if clicked anywhere else
+	$( window ).click( function( e ) {
+		if ( !$( e.target ).is( '#fast-delete-summary, #ca-fast-delete > a' ) && !$( '#fast-delete-summary' ).has( e.target ).length ) {
+			$( '#fast-delete-summary' ).hide();
+		}
+	});
 });
 
 });
