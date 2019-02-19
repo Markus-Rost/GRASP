@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 2.3
+// @version 2.4
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
@@ -12,6 +12,8 @@
 // @grant GM_addStyle
 // ==/UserScript==
 // 
+
+if ( $( '#ca-delete' ).length ) {
 
 GM_addStyle (`
 @import "/load.php?modules=mediawiki.ui.input|mediawiki.ui.button&only=styles";
@@ -39,7 +41,6 @@ GM_addStyle (`
 `);
 
 function fastDelete() {
-if ( $( '#ca-delete' ).length ) {
 
 $( function() {
 'use strict';
@@ -129,7 +130,6 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 });
 
 }
-}
 function checkjQ() {
   if (unsafeWindow.mw) {  
     clearInterval(wait_for_it);
@@ -139,3 +139,5 @@ function checkjQ() {
   }
 }
 var wait_for_it = setInterval(checkjQ, 20);
+
+}
