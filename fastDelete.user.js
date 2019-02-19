@@ -74,7 +74,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 	});
 
     // Allow to be submitted by pressing enter while focused on the input field
-    $( '#mw-content-text' ).on( 'keypress', '.fast-delete-text', function( e ) {
+    $( '#right-navigation' ).on( 'keypress', '.fast-delete-text', function( e ) {
         if ( e.which !== 13 ) {
             return;
         }
