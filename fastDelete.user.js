@@ -105,6 +105,13 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 		e.preventDefault();
 		$( '.fast-delete-submit-button' ).click();
 	});
+	$( '#right-navigation' ).on( 'keypress', '.fast-block-text', function( e ) {
+		if ( e.which !== 13 ) {
+			return;
+		}
+		e.preventDefault();
+		$( '.fast-block-submit-button' ).click();
+	});
 
 	// Close if clicked anywhere else
 	$( window ).click( function( e ) {
