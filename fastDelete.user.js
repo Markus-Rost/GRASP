@@ -6,12 +6,12 @@
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
 // @downloadURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
 // @include https://*.gamepedia.com/*
+// @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @run-at document-idle
 // @grant unsafeWindow
 // @grant GM_addStyle
 // ==/UserScript==
 
-var $ = unsafeWindow.$;
 if ( $( '#ca-delete' ).length ) {
 
 GM_addStyle (`
