@@ -54,7 +54,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 				$( '<input type="text">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
 					'[[gphelp:GRASP|GRASP]]: Spam article'
 				),
-				$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-delete-submit-button' ).val( 'Delete' )
+				$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-delete-submit-button' ).val( 'Delete' ),
 				$( '<input type="text">' ).addClass( 'mw-ui-input fast-block-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
 					'[[gphelp:GRASP|GRASP]]: Creating spam articles'
 				),
