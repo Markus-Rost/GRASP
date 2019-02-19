@@ -11,8 +11,7 @@
 // @grant unsafeWindow
 // @grant GM_addStyle
 // ==/UserScript==
-
-if ( $( '#ca-delete' ).length ) {
+// 
 
 GM_addStyle (`
 @import "/load.php?modules=mediawiki.ui.input|mediawiki.ui.button&only=styles";
@@ -38,6 +37,9 @@ GM_addStyle (`
 	flex: none;
 }
 `);
+
+function fastDelete() {
+if ( $( '#ca-delete' ).length ) {
 
 $( function() {
 'use strict';
@@ -127,3 +129,13 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 });
 
 }
+}
+function checkjQ() {
+  if (unsafeWindow.mw) {  
+    clearInterval(wait_for_it);
+    fastDelete();
+  } else {
+    return false;
+  }
+}
+var wait_for_it = setInterval(checkjQ, 20);
