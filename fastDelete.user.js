@@ -11,7 +11,6 @@
 // @grant unsafeWindow
 // @grant GM_addStyle
 // ==/UserScript==
-//
 
 if ( $( '#ca-delete' ).length ) {
 
