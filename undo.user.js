@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name GRASP undo
-// @version 1.1
+// @version 1.2
 // @description Undo with link to GRASP
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/undo.user.js
 // @downloadURL https://github.com/Markus-Rost/GRASP/raw/master/undo.user.js
 // @include https://*.gamepedia.com/*
+// @exclude https://*.gamepedia.com/api.php*
+// @exclude https://www.gamepedia.com/*
 // @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @grant none
 // ==/UserScript==
