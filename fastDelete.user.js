@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 3.1
+// @version 3.2
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
 // @downloadURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
 // @include https://*.gamepedia.com/*
+// @exclude https://*.gamepedia.com/api.php*
+// @exclude https://www.gamepedia.com/*
 // @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @run-at document-idle
 // @grant unsafeWindow
