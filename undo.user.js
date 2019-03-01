@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP undo
-// @version 1.0
+// @version 1.1
 // @description Undo with link to GRASP
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/undo.user.js
