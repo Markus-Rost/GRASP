@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 3.0
+// @version 3.1
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
@@ -72,6 +72,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 					),
 					$( '<datalist id="fast-block-reason">' ).append(
 						$( '<option>' ).addClass( 'fast-block-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Creating spam articles' ),
+						$( '<option>' ).addClass( 'fast-block-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Spam bot' ),
 						$( '<option>' ).addClass( 'fast-block-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Vandalism' )
 					),
 					$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-block-submit-button' ).val( 'Delete page and block page creator' )
