@@ -6,6 +6,7 @@
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/editableRollback.user.js
 // @downloadURL https://github.com/Markus-Rost/GRASP/raw/master/editableRollback.user.js
 // @include https://*.gamepedia.com/*
+// @exclude https://*.gamepedia.com/api.php*
 // @exclude https://www.gamepedia.com/*
 // @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @run-at document-idle
