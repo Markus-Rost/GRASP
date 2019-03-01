@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 2.4
+// @version 3.0
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
@@ -27,14 +27,14 @@ GM_addStyle (`
 	z-index: 99;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
-#fast-delete-summary > div {
+.fast-delete-div {
 	display: flex;
 }
-#fast-delete-summary > div > .fast-delete-text, #fast-delete-summary > div > .fast-block-text {
+.fast-delete-text, .fast-block-text {
 	flex: auto;
 	margin-right: 1em;
 }
-#fast-delete-summary > div > .fast-delete-submit-button, #fast-delete-summary > div > .fast-block-submit-button {
+.fast-delete-submit-button, .fast-block-submit-button {
 	flex: none;
 }
 `);
@@ -47,23 +47,32 @@ $( function() {
 var mw = unsafeWindow.mw;
 mw.loader.using(['site','mediawiki.util']).done(function() {
 	$(mw.util.addPortletLink('p-cactions', 'javascript:;', "Fast delete", 'ca-fast-delete', "Fast delete this page")).click(function() {
-		var $rollback = $( '#fast-delete-summary' );
+		var $fastdelete = $( '#fast-delete-summary' );
 
-		if ( $rollback.length ) {
-			$rollback.toggle();
+		if ( $fastdelete.length ) {
+			$fastdelete.toggle();
 		} else {
-			$rollback.remove();
+			$fastdelete.remove();
 
-			$rollback = $( '<div id="fast-delete-summary">' ).append(
-				$( '<div>' ).append(
-					$( '<input type="text">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
+			$fastdelete = $( '<div id="fast-delete-summary">' ).append(
+				$( '<div>' ).addClass( 'fast-delete-div' ).append(
+					$( '<input type="text" list="fast-delete-reason">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
 						'[[gphelp:GRASP|GRASP]]: Spam article'
+					),
+					$( '<datalist id="fast-delete-reason">' ).append(
+						$( '<option>' ).addClass( 'mw-ui-input fast-delete-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Spam article' ),
+						$( '<option>' ).addClass( 'mw-ui-input fast-delete-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Vandalism' ),
+						$( '<option>' ).addClass( 'mw-ui-input fast-delete-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Empty page' )
 					),
 					$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-delete-submit-button' ).val( 'Delete page' )
 				),
-				$( '<div>' ).append(
-					$( '<input type="text">' ).addClass( 'mw-ui-input fast-block-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
+				$( '<div>' ).addClass( 'fast-delete-div' ).append(
+					$( '<input type="text" list="fast-block-reason">' ).addClass( 'mw-ui-input fast-block-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
 						'[[gphelp:GRASP|GRASP]]: Creating spam articles'
+					),
+					$( '<datalist id="fast-block-reason">' ).append(
+						$( '<option>' ).addClass( 'fast-block-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Creating spam articles' ),
+						$( '<option>' ).addClass( 'fast-block-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Vandalism' )
 					),
 					$( '<input type="button">' ).addClass( 'mw-ui-button mw-ui-constructive fast-block-submit-button' ).val( 'Delete page and block page creator' )
 				)
