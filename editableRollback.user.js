@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP editableRollback
-// @version 1.0
+// @version 1.1
 // @description Edit rollback summary with link to GRASP
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/editableRollback.user.js
