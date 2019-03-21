@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Global user tracker
-// @version 1.1
+// @version 1.2
 // @description Track a user from the profile
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/userTracker.user.js
@@ -13,7 +13,7 @@
 $( '.section.stats' ).find( 'dd' ).first().replaceWith( function() {
 	var props = {
 		href: 'https://help.gamepedia.com/Gamepedia_Help_Wiki:Global_user_tracker#' + window.location.hostname.replace( '.gamepedia.com', '' ) + '/' + $( '.headline > h1 > .mw-headline' ).text().replace(/ /g,'_'),
-		title: 'Track is user globally',
+		title: 'Track this user globally',
 		target: '_blank'
 	};
 	return $( '<dl>' ).append(
