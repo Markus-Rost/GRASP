@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP fastDelete
-// @version 3.2
+// @version 3.3
 // @description Fast delete a page
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/fastDelete.user.js
@@ -8,13 +8,11 @@
 // @include https://*.gamepedia.com/*
 // @exclude https://*.gamepedia.com/api.php*
 // @exclude https://www.gamepedia.com/*
-// @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @run-at document-idle
-// @grant unsafeWindow
 // @grant GM_addStyle
 // ==/UserScript==
 
-if ( $( '#ca-delete' ).length ) {
+function fastDelete() {
 
 GM_addStyle (`
 @import "/load.php?modules=mediawiki.ui.input|mediawiki.ui.button&only=styles";
@@ -41,12 +39,9 @@ GM_addStyle (`
 }
 `);
 
-function fastDelete() {
-
 $( function() {
 'use strict';
 
-var mw = unsafeWindow.mw;
 mw.loader.using(['site','mediawiki.util']).done(function() {
 	$(mw.util.addPortletLink('p-cactions', 'javascript:;', "Fast delete", 'ca-fast-delete', "Fast delete this page")).click(function() {
 		var $fastdelete = $( '#fast-delete-summary' );
@@ -59,7 +54,7 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 			$fastdelete = $( '<div id="fast-delete-summary">' ).append(
 				$( '<div>' ).addClass( 'fast-delete-div' ).append(
 					$( '<input type="text" list="fast-delete-reason">' ).addClass( 'mw-ui-input fast-delete-text' ).prop( { maxlength: 250, spellcheck: true } ).val(
-						'[[gphelp:GRASP|GRASP]]: Spam article'
+						'[[gphelp:GRASP|GRASP]]: '
 					),
 					$( '<datalist id="fast-delete-reason">' ).append(
 						$( '<option>' ).addClass( 'mw-ui-input fast-delete-reason-option' ).val( '[[gphelp:GRASP|GRASP]]: Spam article' ),
@@ -142,13 +137,11 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 
 }
 function checkjQ() {
-	if (unsafeWindow.mw) {
+	if ($&&mw) {
 		clearInterval(wait_for_it);
-		fastDelete();
+		if ( $( '#ca-delete' ).length ) fastDelete();
 	} else {
 		return false;
 	}
 }
 var wait_for_it = setInterval(checkjQ, 20);
-
-}

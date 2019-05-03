@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP editableRollback
-// @version 1.2
+// @version 1.3
 // @description Edit rollback summary with link to GRASP
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/editableRollback.user.js
@@ -8,12 +8,11 @@
 // @include https://*.gamepedia.com/*
 // @exclude https://*.gamepedia.com/api.php*
 // @exclude https://www.gamepedia.com/*
-// @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @run-at document-idle
 // @grant GM_addStyle
 // ==/UserScript==
 
-if ( $( '.mw-rollback-link' ).length ) {
+function editableRollback() {
 
 GM_addStyle (`
 @import "/load.php?modules=mediawiki.ui.input|mediawiki.ui.button&only=styles";
@@ -99,3 +98,12 @@ $( window ).click( function( e ) {
 
 
 }
+function checkjQ() {
+	if ($) {
+		clearInterval(wait_for_it);
+		if ( $( '.mw-rollback-link' ).length ) editableRollback();
+	} else {
+		return false;
+	}
+}
+var wait_for_it = setInterval(checkjQ, 20);

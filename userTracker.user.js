@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name Global user tracker
-// @version 1.2
+// @version 1.3
 // @description Track a user from the profile
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/userTracker.user.js
 // @downloadURL https://github.com/Markus-Rost/GRASP/raw/master/userTracker.user.js
 // @include https://*.gamepedia.com/UserProfile:*
-// @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @run-at document-idle
 // ==/UserScript==
+
+function userTracker() {
 
 $( '.section.stats' ).find( 'dd' ).first().replaceWith( function() {
 	var props = {
@@ -23,3 +24,14 @@ $( '.section.stats' ).find( 'dd' ).first().replaceWith( function() {
     $( '<dd>' ).text( $( this ).text() )
   )
 } );
+
+}
+function checkjQ() {
+	if ($) {
+		clearInterval(wait_for_it);
+		userTracker();
+	} else {
+		return false;
+	}
+}
+var wait_for_it = setInterval(checkjQ, 20);

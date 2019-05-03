@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GRASP undo
-// @version 1.2
+// @version 1.3
 // @description Undo with link to GRASP
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/undo.user.js
@@ -8,9 +8,19 @@
 // @include https://*.gamepedia.com/*
 // @exclude https://*.gamepedia.com/api.php*
 // @exclude https://www.gamepedia.com/*
-// @require https://help.gamepedia.com/load.php?modules=jquery&only=scripts
 // @grant none
 // ==/UserScript==
 
-var $Summary = $( '#wpSummary input[type=text],#wpSummary[type=text]' );
-if ( $('.mw-undo-success').length ) $Summary.val( '[[gphelp:GRASP|GRASP]]: ' + $Summary.val() );
+function graspUndo() {
+    var $Summary = $( '#wpSummary input[type=text],#wpSummary[type=text]' );
+    $Summary.val( '[[gphelp:GRASP|GRASP]]: ' + $Summary.val() );
+}
+function checkjQ() {
+	if ($) {
+		clearInterval(wait_for_it);
+		if ( $('.mw-undo-success').length ) graspUndo();
+	} else {
+		return false;
+	}
+}
+var wait_for_it = setInterval(checkjQ, 20);
