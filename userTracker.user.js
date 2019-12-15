@@ -27,6 +27,7 @@ $( '.section.stats' ).find( 'dd' ).first().replaceWith( function() {
 
 }
 function checkjQ() {
+	if (!document.getElementsByClassName('mediawiki').length) return clearInterval(wait_for_it);
 	if ($) {
 		clearInterval(wait_for_it);
 		userTracker();
