@@ -16,6 +16,7 @@ function graspUndo() {
     $Summary.val( '[[gphelp:GRASP|GRASP]]: ' + $Summary.val() );
 }
 function checkjQ() {
+	if (!document.getElementsByClassName('mediawiki').length) return clearInterval(wait_for_it);
 	if ($) {
 		clearInterval(wait_for_it);
 		if ( $('.mw-undo-success').length ) graspUndo();
