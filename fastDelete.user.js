@@ -42,7 +42,7 @@ GM_addStyle (`
 $( function() {
 'use strict';
 
-mw.loader.using(['site','mediawiki.util']).done(function() {
+mw.loader.using(['site','mediawiki.util','mediawiki.api']).done(function() {
 	$(mw.util.addPortletLink('p-cactions', 'javascript:;', "Fast delete", 'ca-fast-delete', "Fast delete this page")).click(function() {
 		var $fastdelete = $( '#fast-delete-summary' );
 
@@ -137,7 +137,8 @@ mw.loader.using(['site','mediawiki.util']).done(function() {
 
 }
 function checkjQ() {
-	if ($&&mw) {
+	if (!document.getElementsByClassName('mediawiki').length) return clearInterval(wait_for_it);
+	if ($&&mw&&mw.loader&&mw.loader.using) {
 		clearInterval(wait_for_it);
 		if ( $( '#ca-delete' ).length ) fastDelete();
 	} else {
