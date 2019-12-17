@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name contributionGrid
-// @version 0.9
+// @version 1.0
 // @description Contribution grid (starting week with Monday)
 // @author MarkusRost
+// @updateURL https://github.com/Markus-Rost/GRASP/raw/master/contributionGrid.user.js
+// @downloadURL https://github.com/Markus-Rost/GRASP/raw/master/contributionGrid.user.js
 // @include https://*.gamepedia.com/UserProfile:*
 // @run-at document-idle
-// @grant GM_addStyle
 // ==/UserScript==
 
 function contributionGrid() {
@@ -49,8 +50,12 @@ mw.loader.using(['site','mediawiki.util','mediawiki.api']).then(function() {
 			var bgColor = "#9999997d";
 			if (da.contribs > 0) bgColor = "#F3B67D";
 			if (da.contribs > 10) bgColor = "#F3B679";
-			if (da.contribs > 20) bgColor = "#F39A48";
-			if (da.contribs > 30) bgColor = "#F37F20";
+			if (da.contribs > 25) bgColor = "#e29b59";
+			if (da.contribs > 50) bgColor = "#F39A48";
+			if (da.contribs > 75) bgColor = "#de8135";
+			if (da.contribs > 100) bgColor = "#F37F20";
+			if (da.contribs > 250) bgColor = "#ff7c06";
+			if (da.contribs > 500) bgColor = "#ff8c00";
 			gridOutput += '<a title="'+date.toLocaleString(undefined, {year:'numeric',month:'short',day:'numeric'})+': '+da.contribs+' Contributions" style="border:1px dashed '+(date.getMonth()%2?'green':'red')+';background-color:'+bgColor+'; grid-area:'+dayNum+' / '+weekNum+' / '+(dayNum+1)+' / '+(weekNum+1)+';" href="'+urlBase+da.date+'&end='+da.date+'"></a>';
 			numWeeks = weekNum;
 		}
