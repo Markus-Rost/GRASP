@@ -13,7 +13,7 @@ function userTracker() {
 
 $( '.section.stats' ).find( 'dd' ).first().replaceWith( function() {
 	var props = {
-		href: 'https://help.gamepedia.com/Gamepedia_Help_Wiki:Global_user_tracker#' + window.location.hostname.replace( '.gamepedia.com', '' ) + '/' + $( '.headline > h1 > .mw-headline' ).text().replace(/ /g,'_'),
+		href: 'https://community.fandom.com/wiki/Special:LookupUser/' + $( '.headline > h1 > .mw-headline' ).text().replace(/ /g,'_'),
 		title: 'Track this user globally',
 		target: '_blank'
 	};
