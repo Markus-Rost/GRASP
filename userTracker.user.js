@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Global user tracker
-// @version 1.4
+// @version 2.0
 // @description Track a user from the profile
 // @author MarkusRost
 // @updateURL https://github.com/Markus-Rost/GRASP/raw/master/userTracker.user.js
